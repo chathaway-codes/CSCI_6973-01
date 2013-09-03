@@ -1,0 +1,166 @@
+Current configuration : 2552 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname CAT4
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+authentication mac-move permit
+ip subnet-zero
+!
+!
+vtp mode transparent
+!
+!
+!
+license boot level ipservices
+spanning-tree mode pvst
+spanning-tree etherchannel guard misconfig
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 2
+ name R1-R2
+!
+vlan 3
+ name R2-R3
+!
+vlan 4
+ name R1-R4
+!
+vlan 5    
+ name R3-R5
+!
+vlan 10-13,20,70,101 
+!
+!
+!
+!
+interface Port-channel1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!         
+interface GigabitEthernet0/3
+!
+interface GigabitEthernet0/4
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 70
+ switchport mode trunk
+!
+interface GigabitEthernet0/5
+!
+interface GigabitEthernet0/6
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 101
+ switchport mode trunk
+!
+interface GigabitEthernet0/7
+!
+interface GigabitEthernet0/8
+!
+interface GigabitEthernet0/9
+!
+interface GigabitEthernet0/10
+!
+interface GigabitEthernet0/11
+!
+interface GigabitEthernet0/12
+!
+interface GigabitEthernet0/13
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode on
+!
+interface GigabitEthernet0/14
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode on
+!
+interface GigabitEthernet0/15
+!
+interface GigabitEthernet0/16
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode on
+!
+interface GigabitEthernet0/17
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode on
+!
+interface GigabitEthernet0/18
+!
+interface GigabitEthernet0/19
+!
+interface GigabitEthernet0/20
+!
+interface GigabitEthernet0/21
+!
+interface GigabitEthernet0/22
+!
+interface GigabitEthernet0/23
+!
+interface GigabitEthernet0/24
+!
+interface GigabitEthernet1/1
+!
+interface GigabitEthernet1/2
+!
+interface GigabitEthernet1/3
+!
+interface GigabitEthernet1/4
+!
+interface TenGigabitEthernet1/1
+!
+interface TenGigabitEthernet1/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan70
+ no ip address
+!
+interface Vlan101
+ no ip address
+!
+ip classless
+!
+ip http server
+ip http secure-server
+!
+ip sla enable reaction-alerts
+!
+!         
+!
+line con 0
+line vty 5 15
+!
+end

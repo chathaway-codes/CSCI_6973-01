@@ -1,0 +1,132 @@
+Current configuration : 1352 bytes
+!
+! Last configuration change at 16:12:15 UTC Tue Sep 3 2013
+!
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+memory-size iomem 10
+!
+no ipv6 cef
+ip source-route
+ip cef
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+voice-card 0
+!
+!
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX144003EP
+!         
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.1.1.3 255.255.255.255
+ !
+!
+interface GigabitEthernet0/0
+ ip address 128.213.130.1 255.255.255.224
+ duplex auto
+ speed auto
+ vlan-id dot1q 300
+  exit-vlan-config
+ !        
+ !
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ !
+!
+interface GigabitEthernet0/1.13
+ encapsulation dot1Q 13
+ ip address 128.213.113.3 255.255.255.0
+!
+interface GigabitEthernet0/1.138
+ encapsulation dot1Q 138
+ ip address 128.213.138.1 255.255.255.252
+!
+interface Serial0/0/0
+ no ip address
+ shutdown
+ no clock rate 2000000
+ !
+!
+interface Serial0/0/1
+ no ip address
+ shutdown
+ clock rate 2000000
+ !
+!
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+!
+control-plane
+ !
+!
+!
+!         
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+!
+scheduler allocate 20000 1000
+end
