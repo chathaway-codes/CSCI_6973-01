@@ -1,6 +1,6 @@
-Current configuration : 1268 bytes
+Current configuration : 1649 bytes
 !
-! Last configuration change at 17:01:46 UTC Tue Sep 3 2013
+! Last configuration change at 23:49:15 UTC Tue Sep 3 2013
 !
 version 15.0
 service timestamps debug datetime msec
@@ -56,6 +56,10 @@ redundancy
 !
 !
 !
+interface Loopback0
+ ip address 10.1.1.3 255.255.255.255
+ !
+!
 interface GigabitEthernet0/0
  ip address 128.213.130.2 255.255.255.224
  duplex auto
@@ -78,18 +82,28 @@ interface GigabitEthernet0/1
  !
 !
 interface Serial0/0/0
- no ip address
- shutdown
+ ip address 128.213.25.4 255.255.255.0
+ encapsulation frame-relay IETF
  no fair-queue
  no clock rate 2000000
+ frame-relay map ip 128.213.25.2 402 broadcast IETF
+ frame-relay map ip 128.213.25.3 403 broadcast IETF
  !
-!
+!         
 interface Serial0/0/1
  no ip address
  shutdown
  clock rate 2000000
  !
-!         
+!
+!
+!
+router eigrp 113
+ network 10.1.1.3 0.0.0.0
+ network 38.1.1.0 0.0.0.3
+ network 128.213.25.0 0.0.0.255
+ network 128.213.40.0 0.0.0.255
+ network 128.213.130.0 0.0.0.31
 !
 ip forward-protocol nd
 !
@@ -98,7 +112,7 @@ no ip http secure-server
 !
 !
 !
-!
+!         
 !
 !
 !
@@ -112,7 +126,7 @@ control-plane
 !
 !
 !
-!         
+!
 gatekeeper
  shutdown
 !
@@ -121,7 +135,8 @@ line con 0
  logging synchronous
 line aux 0
 line vty 0 4
- login
+ login    
 !
 scheduler allocate 20000 1000
 end
+
