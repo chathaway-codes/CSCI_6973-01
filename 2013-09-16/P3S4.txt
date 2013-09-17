@@ -1,0 +1,199 @@
+Building configuration...
+
+Current configuration : 4211 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname CAT4
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+authentication mac-move permit
+ip subnet-zero
+!
+!
+vtp mode transparent
+!
+!
+crypto pki trustpoint TP-self-signed-4076379264
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4076379264
+ revocation-check none
+ rsakeypair TP-self-signed-4076379264
+!
+!
+crypto pki certificate chain TP-self-signed-4076379264
+ certificate self-signed 01
+  3082023D 308201A6 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 34303736 33373932 3634301E 170D3933 30333031 30323035 
+  33325A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 30373633 
+  37393236 3430819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100CEAA 455CD09C 59AA18B9 96405AC5 EC3D80C0 2E39D5ED 20BA615A 5ABDDED6 
+  09D61803 E0D03755 46D05BF5 306D141E 3D9D7AF1 F301296B DB3A16D8 8C0E2CA0 
+  444BC90A 993FF201 59599F02 49E0435E E4B6CC9B 1E2C30AC 77F017A1 5FFC37FE 
+  8181711F B1C0376C 42334E6B 7F38C8B5 1A6D53D2 B2043BD7 0B0032CB BAE286AE 
+  1C8B0203 010001A3 65306330 0F060355 1D130101 FF040530 030101FF 30100603 
+  551D1104 09300782 05434154 342E301F 0603551D 23041830 16801427 B008FBBF 
+  8A439532 35D29082 1116A0A3 EA1D0E30 1D060355 1D0E0416 041427B0 08FBBF8A 
+  43953235 D2908211 16A0A3EA 1D0E300D 06092A86 4886F70D 01010405 00038181 
+  00411369 B32BAD68 1B13E012 A5B1E2EF E50855D3 844C181F 4DAF9223 2DB50BD0 
+  5530B197 C8CFA419 CECFD1CE 10E9D5E0 668C2F93 CE5332F3 324DF742 3F73BF99 
+  CD6A8DF9 5B8E4DCB CFC86B6A A142998A E2344598 E278BD2D A345A2B7 71DABCAF 
+  BAC16E6F B1F66796 18A411DF 902A5CF3 95268B8A 09D6F9DE 3F25D4F2 927B9A24 00
+  quit
+license boot level ipservices
+spanning-tree mode pvst
+spanning-tree etherchannel guard misconfig
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 2
+ name R1-R2
+!
+vlan 3
+ name R2-R3
+!
+vlan 4
+ name R1-R4
+!
+vlan 5
+ name R3-R5
+!
+vlan 10-13,20,70,101 
+!
+!
+!
+!
+interface Port-channel1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface GigabitEthernet0/3
+!
+interface GigabitEthernet0/4
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 70
+ switchport mode trunk
+!
+interface GigabitEthernet0/5
+!
+interface GigabitEthernet0/6
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 101
+ switchport mode trunk
+!
+interface GigabitEthernet0/7
+!
+interface GigabitEthernet0/8
+!
+interface GigabitEthernet0/9
+!
+interface GigabitEthernet0/10
+!
+interface GigabitEthernet0/11
+!
+interface GigabitEthernet0/12
+!
+interface GigabitEthernet0/13
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode on
+!
+interface GigabitEthernet0/14
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode on
+!
+interface GigabitEthernet0/15
+!
+interface GigabitEthernet0/16
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode on
+!
+interface GigabitEthernet0/17
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode on
+!
+interface GigabitEthernet0/18
+!
+interface GigabitEthernet0/19
+!
+interface GigabitEthernet0/20
+!
+interface GigabitEthernet0/21
+!
+interface GigabitEthernet0/22
+!
+interface GigabitEthernet0/23
+!
+interface GigabitEthernet0/24
+!
+interface GigabitEthernet1/1
+!
+interface GigabitEthernet1/2
+!
+interface GigabitEthernet1/3
+!
+interface GigabitEthernet1/4
+!
+interface TenGigabitEthernet1/1
+!
+interface TenGigabitEthernet1/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan70
+ no ip address
+!
+interface Vlan101
+ no ip address
+!
+ip classless
+!
+ip http server
+ip http secure-server
+!
+ip sla enable reaction-alerts
+!
+!
+!
+line con 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end
+

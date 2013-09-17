@@ -1,0 +1,186 @@
+Building configuration...
+
+Current configuration : 3948 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname CAT3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+authentication mac-move permit
+ip subnet-zero
+!
+!
+vtp mode transparent
+!
+!
+crypto pki trustpoint TP-self-signed-4075069184
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4075069184
+ revocation-check none
+ rsakeypair TP-self-signed-4075069184
+!
+!
+crypto pki certificate chain TP-self-signed-4075069184
+ certificate self-signed 01
+  3082023D 308201A6 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 34303735 30363931 3834301E 170D3933 30333031 30323035 
+  32315A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 30373530 
+  36393138 3430819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100C9C7 EE7EFAA7 CC208095 3B6DBC47 4699420B 16CF4972 BA2B969E C2CF6A13 
+  3136D5A3 1A1EA7A5 9F3093B4 8D4B3DDA 6350B009 A72114B5 7E5F992B C1D02C6B 
+  3BE28460 07E70A72 C04ABEA0 486C6237 43D5C78F BD5572C2 CADEF0EB 8D42AB72 
+  315B1832 5258E6F5 F0D82937 1A1888CD 41CCF50C 4FDA3DDE F673C6D2 25DBA43B 
+  2A010203 010001A3 65306330 0F060355 1D130101 FF040530 030101FF 30100603 
+  551D1104 09300782 05434154 332E301F 0603551D 23041830 16801455 6EB7E4E3 
+  C5C0FD29 4C879F01 32FDB2CF 54B37A30 1D060355 1D0E0416 0414556E B7E4E3C5 
+  C0FD294C 879F0132 FDB2CF54 B37A300D 06092A86 4886F70D 01010405 00038181 
+  008043D2 967A38C1 8D4C83E6 5E8B268F 0B21532E B3D94792 C295C977 8D73BEA5 
+  F896DEC0 81A472C7 9CA257D5 5387121E 03402EC7 0EC131DA C24AF8CF E6CA0D8B 
+  71AAF089 A945C1EA 8ABFCBEF 8AA6C72A 7B7A8C71 243E1D66 0EEF9477 D6A85C38 
+  4E7C0CA8 DFDDED65 AE2FC11B DE97BC07 6D9B6EA0 F3ED7648 F2E8F0C3 F754A3AC FD
+  quit
+license boot level ipservices
+spanning-tree mode pvst
+spanning-tree etherchannel guard misconfig
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 2
+ name R1-R2
+!
+vlan 3
+ name R2-R3
+!
+vlan 4
+ name R1-R4
+!
+vlan 5
+ name R3-R5
+!
+vlan 10-13,20,138 
+!
+!
+!
+!
+interface Port-channel1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0
+ no ip address
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface GigabitEthernet0/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/4
+!
+interface GigabitEthernet0/5
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 138
+ switchport mode trunk
+!
+interface GigabitEthernet0/6
+!
+interface GigabitEthernet0/7
+!
+interface GigabitEthernet0/8
+!
+interface GigabitEthernet0/9
+!
+interface GigabitEthernet0/10
+!
+interface GigabitEthernet0/11
+!
+interface GigabitEthernet0/12
+!
+interface GigabitEthernet0/13
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode on
+!
+interface GigabitEthernet0/14
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode on
+!
+interface GigabitEthernet0/15
+!
+interface GigabitEthernet0/16
+!
+interface GigabitEthernet0/17
+!
+interface GigabitEthernet0/18
+!
+interface GigabitEthernet0/19
+!
+interface GigabitEthernet0/20
+!
+interface GigabitEthernet0/21
+!
+interface GigabitEthernet0/22
+!
+interface GigabitEthernet0/23
+!
+interface GigabitEthernet0/24
+!
+interface GigabitEthernet1/1
+!
+interface GigabitEthernet1/2
+!
+interface GigabitEthernet1/3
+!
+interface GigabitEthernet1/4
+!
+interface TenGigabitEthernet1/1
+!
+interface TenGigabitEthernet1/2
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan13
+ ip address 128.213.113.4 255.255.255.0
+!
+interface Vlan138
+ ip address 128.213.138.3 255.255.255.248
+!
+ip classless
+!
+ip http server
+ip http secure-server
+!
+ip sla enable reaction-alerts
+!
+!
+!
+line con 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end
+
