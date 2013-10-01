@@ -1,0 +1,39 @@
+1) Split horizon prevents a router from advertising a route back onto an interface that it was learned.
+  This might be disabled if the interface has more than one device on it, for example a frame-relay interface with multiple DLC's
+
+2)
+ Hello          Multicast           Unreliable
+ ACK            Unicast             Reliable
+ Update         Unicast(new)        Reliable
+                Multicast(changes)
+ Query/Reply    Unicast(Reply)      Reliable
+                Multicast(Query)
+ 
+3) The feasibility condition determins whether a route is feasible for the current router. To be feasible, it's advertised distance must be less than the feasable distance of the current route.
+
+4) Administrative distance is used to decided which type of route should be preferred.
+ Local: 0
+ Static: 1
+ eBGP: 20
+ EIGRP: 90
+ IGRP: 100
+ OSPF: 110
+ ISIS: 115
+ RIP: 120
+ eEIGRP: 200
+
+5) A floating static route is a route that will only be used as a backup when a dynamic route vanishes. Generally, it's AD will be higher than all other routes.
+
+6) A passive interface doesn't send updates, but will be it's subnets will be advertised by other algorithmns
+
+7) EIGRP neighbors statements for each neighbor 
+
+8) Address size
+
+9) OSPF is not vender specific, EIGRP is. EIGRP is easier to configure (initially). EIGRP uses the DUAL algorithmn, OSPF doesn't
+
+10) 10^8/Bandwidth + delay. One can also use reliability and load.
+
+11) It will use no more than 50% for routing updates
+
+12) When packets are dropped due to congestion
