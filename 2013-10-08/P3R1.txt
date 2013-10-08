@@ -1,0 +1,156 @@
+Building configuration...
+
+
+Current configuration : 1885 bytes
+!
+! Last configuration change at 14:15:20 UTC Tue Oct 8 2013
+!
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+memory-size iomem 10
+!
+no ipv6 cef
+ip source-route
+ip cef
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+key chain chain1
+ key 1
+  key-string rpilan
+  accept-lifetime 00:00:00 Jan 1 1993 infinite
+  send-lifetime 00:00:00 Jan 1 1993 infinite
+!
+!
+voice-card 0
+!
+!
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX144003EJ
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.1.1.1 255.255.255.255
+ !
+!
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ !
+!
+interface GigabitEthernet0/0.5
+ encapsulation dot1Q 5
+ ip address 128.213.105.1 255.255.255.0
+ ip authentication mode eigrp 113 md5
+ ip authentication key-chain eigrp 113 chain1
+ ipv6 address 2620:0:1000:105::1/64
+!
+interface GigabitEthernet0/0.13
+ encapsulation dot1Q 13
+ ip address 128.213.113.1 255.255.255.0
+ ip authentication mode eigrp 113 md5
+ ip authentication key-chain eigrp 113 chain1
+ ipv6 address 2620:0:1000:1::1/64
+!
+interface GigabitEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface GigabitEthernet0/1.5
+!
+interface Serial0/0/0
+ no ip address
+ shutdown
+ no fair-queue
+ no clock rate 2000000
+ !
+!
+interface Serial0/0/1
+ no ip address
+ shutdown
+ clock rate 2000000
+ !
+!
+!
+router ospf 1
+ log-adjacency-changes
+ network 10.1.1.1 0.0.0.0 area 12
+ network 128.213.105.0 0.0.0.255 area 25
+ network 128.213.113.0 0.0.0.255 area 12
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+!
+control-plane
+ !
+!
+!
+!
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+!
+scheduler allocate 20000 1000
+end
+
