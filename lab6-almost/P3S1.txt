@@ -1,0 +1,210 @@
+Building configuration...
+
+Current configuration : 4532 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname CAT1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+authentication mac-move permit
+ip subnet-zero
+!
+!
+vtp mode transparent
+!
+!
+crypto pki trustpoint TP-self-signed-4075697920
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4075697920
+ revocation-check none
+ rsakeypair TP-self-signed-4075697920
+!
+!
+crypto pki certificate chain TP-self-signed-4075697920
+ certificate self-signed 01
+  3082023D 308201A6 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 34303735 36393739 3230301E 170D3933 30333031 30323035 
+  30365A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 30373536 
+  39373932 3030819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100DAA0 86C46D83 10B6BE28 E9E62BEF FCCB8B35 92E007D0 D1524C10 157630A7 
+  403B667E 2ACDF447 AFD29D99 9D65B748 9AED13A6 D1FF3183 A500667E 628E88A3 
+  6BCF60EC A07D8397 15CBF628 C736BAD5 675A35E2 25C4B2CF 7A915A94 53DF95EA 
+  9A8F1748 DB0A02B4 EC3BA9D1 0474D750 826E44F9 1C1C25E5 229C6E51 BA2885E9 
+  2CAF0203 010001A3 65306330 0F060355 1D130101 FF040530 030101FF 30100603 
+  551D1104 09300782 05434154 312E301F 0603551D 23041830 168014E5 1132409E 
+  AB47D453 111343D5 3DD4A9A5 B4763F30 1D060355 1D0E0416 0414E511 32409EAB 
+  47D45311 1343D53D D4A9A5B4 763F300D 06092A86 4886F70D 01010405 00038181 
+  0059FF1C 81ED394B 93DAFA2E A6D9849C 9A6B5769 44223836 CFBF01FE FB298AE9 
+  1492A78B 08D1BDF8 9DF3DF80 8DFB8E9B 396C14A9 6585B71A 8C6160EA 5D8FC8BF 
+  7799AD13 1654F1BE 34F456FC 3802A391 95F0727C 34683C77 D40D82D5 1CCEC7F0 
+  410B36FA 5A4D1EA7 3F998D91 CB819773 721EE852 EFA10B2A BE166E58 0A18CCF3 58
+  quit
+license boot level ipservices
+spanning-tree mode pvst
+spanning-tree etherchannel guard misconfig
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 2
+ name R1-R2
+!
+vlan 3
+ name R2-R3
+!
+vlan 4
+ name R1-R4
+!
+vlan 5
+ name R3-R5
+!
+vlan 10-13,20,70,300 
+!
+!
+!
+!
+interface Port-channel2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel4
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0
+ no ip address
+!
+interface GigabitEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/2
+!
+interface GigabitEthernet0/3
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 300
+ switchport mode trunk
+!
+interface GigabitEthernet0/4
+!
+interface GigabitEthernet0/5
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 70
+ switchport mode trunk
+!
+interface GigabitEthernet0/6
+!
+interface GigabitEthernet0/7
+!
+interface GigabitEthernet0/8
+!
+interface GigabitEthernet0/9
+!
+interface GigabitEthernet0/10
+!
+interface GigabitEthernet0/11
+!
+interface GigabitEthernet0/12
+!
+interface GigabitEthernet0/13
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode on
+!
+interface GigabitEthernet0/14
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode on
+!
+interface GigabitEthernet0/15
+!
+interface GigabitEthernet0/16
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 3 mode on
+!
+interface GigabitEthernet0/17
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 3 mode on
+!
+interface GigabitEthernet0/18
+!
+interface GigabitEthernet0/19
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 4 mode on
+!
+interface GigabitEthernet0/20
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 4 mode on
+!
+interface GigabitEthernet0/21
+!
+interface GigabitEthernet0/22
+!
+interface GigabitEthernet0/23
+!
+interface GigabitEthernet0/24
+!
+interface GigabitEthernet1/1
+!
+interface GigabitEthernet1/2
+!
+interface GigabitEthernet1/3
+!
+interface GigabitEthernet1/4
+!
+interface TenGigabitEthernet1/1
+!
+interface TenGigabitEthernet1/2
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan70
+ no ip address
+!
+interface Vlan300
+ no ip address
+!
+ip classless
+!
+ip http server
+ip http secure-server
+!
+ip sla enable reaction-alerts
+!
+!
+!
+line con 0
+ logging synchronous
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end
+
