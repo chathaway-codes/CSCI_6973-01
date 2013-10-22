@@ -1,0 +1,179 @@
+Building configuration...
+
+
+Current configuration : 2811 bytes
+!
+! Last configuration change at 15:19:19 UTC Tue Oct 22 2013
+!
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+memory-size iomem 10
+!
+ipv6 unicast-routing
+ipv6 cef
+ip source-route
+ip cef
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+key chain chain1
+ key 1
+  key-string rpilan
+  accept-lifetime 00:00:00 Jan 1 1993 infinite
+  send-lifetime 00:00:00 Jan 1 1993 infinite
+!
+!
+voice-card 0
+!
+!
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX144003EG
+license boot module c2900 technology-package securityk9
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.1.1.2 255.255.255.255
+ !
+!
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ !
+!
+interface GigabitEthernet0/0.5
+ encapsulation dot1Q 5
+ ip address 128.213.105.2 255.255.255.0
+ ip authentication mode eigrp 113 md5
+ ip authentication key-chain eigrp 113 chain1
+ ipv6 address 2620:0:1000:105::2/64
+ ipv6 ospf 1 area 25
+!
+interface GigabitEthernet0/0.40
+ encapsulation dot1Q 40
+ ip address 128.213.40.2 255.255.255.0
+ ip authentication mode eigrp 113 md5
+ ip authentication key-chain eigrp 113 chain1
+ ip ospf authentication message-digest
+ ip ospf authentication-key area25
+ ipv6 address 2620:0:1000:40::2/64
+ ipv6 ospf 1 area 25
+!
+interface GigabitEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface Serial0/0/0
+ ip address 128.213.25.2 255.255.255.0
+ ip authentication mode eigrp 113 md5
+ ip authentication key-chain eigrp 113 chain1
+ encapsulation frame-relay IETF
+ ip ospf authentication message-digest
+ ip ospf authentication-key area25
+ ip ospf network broadcast
+ ip ospf cost 1
+ ipv6 address 2620:0:1000:25::2/64
+ ipv6 ospf network broadcast
+ ipv6 ospf 1 area 25
+ no fair-queue
+ no clock rate 2000000
+ frame-relay map ip 128.213.25.3 203 broadcast IETF
+ frame-relay map ip 128.213.25.4 204 broadcast IETF
+ frame-relay map ipv6 2620:0:1000:25::3 203 broadcast IETF
+ frame-relay map ipv6 2620:0:1000:25::4 204 broadcast IETF
+ frame-relay map ipv6 FE80::5A8D:9FF:FE05:9568 203 broadcast IETF
+ frame-relay map ipv6 FE80::1EDF:FFF:FE7F:2F70 204 broadcast IETF
+ !
+!
+interface Serial0/0/1
+ no ip address
+ shutdown
+ clock rate 2000000
+ !
+!
+!
+router ospf 1
+ log-adjacency-changes
+ network 10.1.1.2 0.0.0.0 area 25
+ network 128.213.25.0 0.0.0.255 area 25
+ network 128.213.40.0 0.0.0.255 area 25
+ network 128.213.105.0 0.0.0.255 area 25
+ maximum-paths 2
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+ipv6 router ospf 1
+ log-adjacency-changes
+!
+!
+!
+!
+!
+!
+!
+control-plane
+ !
+!
+!
+!
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+!
+scheduler allocate 20000 1000
+end
+

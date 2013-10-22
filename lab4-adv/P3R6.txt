@@ -1,0 +1,139 @@
+Building configuration...
+
+
+Current configuration : 1504 bytes
+!
+! Last configuration change at 19:23:17 UTC Sun Oct 20 2013
+!
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R6
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+memory-size iomem 10
+!
+no ipv6 cef
+ip source-route
+ip cef
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+voice-card 0
+!
+!
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX144003EC
+license boot module c2900 technology-package securityk9
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 172.16.1.1 255.255.254.0
+ ipv6 address 2620:0:3000::1/64
+ !
+!
+interface GigabitEthernet0/0
+ ip address 38.1.1.5 255.255.255.252
+ duplex auto
+ speed auto
+ ipv6 address 2620:38:0:7::2/127
+ !
+!
+interface GigabitEthernet0/1
+ ip address 38.1.1.1 255.255.255.252
+ duplex auto
+ speed auto
+ ipv6 address 2620:38:0:1::/127
+ !
+!
+interface Serial0/0/0
+ no ip address
+ shutdown
+ no fair-queue
+ no clock rate 2000000
+ !
+!
+interface Serial0/0/1
+ no ip address
+ shutdown
+ clock rate 2000000
+ !
+!
+!
+router bgp 60
+ no synchronization
+ bgp log-neighbor-changes
+ bgp redistribute-internal
+ network 172.16.0.0 mask 255.255.254.0
+ neighbor 38.1.1.6 remote-as 60
+ neighbor 38.1.1.6 allowas-in
+ no auto-summary
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+!
+control-plane
+ !
+!
+!
+!
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+!
+scheduler allocate 20000 1000
+end
+
