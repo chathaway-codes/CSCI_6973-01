@@ -1,0 +1,149 @@
+Building configuration...
+
+
+Current configuration : 1734 bytes
+!
+! Last configuration change at 22:10:04 UTC Tue Oct 22 2013
+!
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R5
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+memory-size iomem 10
+!
+no ipv6 cef
+ip source-route
+ip cef
+!
+!
+ip dhcp excluded-address 38.1.1.6
+!
+ip dhcp pool my_pool
+   network 38.1.1.4 255.255.255.252
+   default-router 38.1.1.6 
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+voice-card 0
+!
+!
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX14410009
+license boot module c2900 technology-package securityk9
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 192.168.1.1 255.255.255.0
+ ipv6 address 2620:0:2000::1/64
+ !
+!
+interface GigabitEthernet0/0
+ ip address 38.1.1.6 255.255.255.252
+ duplex auto
+ speed auto
+ ipv6 address 2620:38:0:7::1/127
+ !
+!
+interface GigabitEthernet0/1
+ ip address 128.213.138.2 255.255.255.252
+ duplex auto
+ speed auto
+ ipv6 address 2620:0:1000:138::2/64
+ !
+!
+interface Serial0/0/0
+ no ip address
+ shutdown
+ no fair-queue
+ no clock rate 2000000
+ !
+!
+interface Serial0/0/1
+ no ip address
+ shutdown
+ no clock rate 2000000
+ !
+!
+!
+!
+router eigrp 60
+!
+router bgp 60
+ no synchronization
+ bgp log-neighbor-changes
+ bgp redistribute-internal
+ network 128.213.138.0 mask 255.255.255.252
+ network 192.168.1.0
+ neighbor 38.1.1.5 remote-as 60
+ neighbor 128.213.138.1 remote-as 113
+ neighbor 128.213.138.1 default-originate
+ no auto-summary
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+!
+control-plane
+ !
+!
+!
+!
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+!
+scheduler allocate 20000 1000
+end
+

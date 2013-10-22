@@ -1,0 +1,236 @@
+Building configuration...
+
+
+Current configuration : 4470 bytes
+!
+! Last configuration change at 23:27:54 UTC Tue Oct 22 2013
+!
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+memory-size iomem 10
+!
+ipv6 unicast-routing
+ipv6 cef
+ip source-route
+ip cef
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+key chain chain1
+ key 1
+  key-string rpilan
+  accept-lifetime 00:00:00 Jan 1 1993 infinite
+  send-lifetime 00:00:00 Jan 1 1993 infinite
+!
+!
+voice-card 0
+!
+!
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX144003EP
+license boot module c2900 technology-package securityk9
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+crypto isakmp policy 1
+ hash md5
+ authentication pre-share
+crypto isakmp key Slurpee-Machine address 38.1.1.5
+!
+!
+crypto ipsec transform-set PapaBear esp-aes 
+crypto ipsec transform-set MamaBear ah-md5-hmac esp-des 
+crypto ipsec transform-set BabyBear ah-sha-hmac 
+!
+crypto map armadillo 10 ipsec-isakmp 
+ set peer 38.1.1.5
+ set transform-set MamaBear PapaBear BabyBear 
+ match address 103
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.1.1.4 255.255.255.255
+ !
+!
+interface Tunnel0
+ ip address 10.10.10.1 255.255.255.252
+ ip ospf network broadcast
+ keepalive 2 3
+ tunnel source 128.213.138.1
+ tunnel destination 38.1.1.5
+ crypto map armadillo
+ !
+!
+interface GigabitEthernet0/0
+ ip address 128.213.130.1 255.255.255.224
+ ip authentication mode eigrp 113 md5
+ ip authentication key-chain eigrp 113 chain1
+ delay 10000000
+ duplex auto
+ speed auto
+ ipv6 address 2620:0:1000:130::1/64
+ ipv6 ospf 1 area 0
+ vlan-id dot1q 300
+  exit-vlan-config
+ !
+ !
+!
+interface GigabitEthernet0/0.13
+!
+interface GigabitEthernet0/0.138
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ !
+!
+interface GigabitEthernet0/1.13
+ encapsulation dot1Q 13
+ ip address 128.213.113.3 255.255.255.0
+ ip authentication mode eigrp 113 md5
+ ip authentication key-chain eigrp 113 chain1
+ ipv6 address 2620:0:1000:1::3/64
+ ipv6 ospf 1 area 12
+!
+interface GigabitEthernet0/1.138
+ encapsulation dot1Q 138
+ ip address 128.213.138.1 255.255.255.252
+ ip authentication mode eigrp 113 md5
+ ip authentication key-chain eigrp 113 chain1
+ ipv6 address 2620:0:1000:138::1/64
+ ipv6 ospf 1 area 0
+ crypto map armadillo
+!
+interface Serial0/0/0
+ ip address 128.213.25.3 255.255.255.0
+ ip authentication mode eigrp 113 md5
+ ip authentication key-chain eigrp 113 chain1
+ encapsulation frame-relay IETF
+ ip ospf authentication message-digest
+ ip ospf authentication-key area25
+ ip ospf network broadcast
+ delay 100
+ ipv6 address 2620:0:1000:25::3/64
+ ipv6 ospf network broadcast
+ ipv6 ospf 1 area 25
+ no fair-queue
+ no clock rate 2000000
+ frame-relay map ipv6 FE80::1EDF:FFF:FEE2:1830 302 broadcast IETF
+ frame-relay map ipv6 FE80::1EDF:FFF:FE7F:2F70 304 broadcast IETF
+ frame-relay map ipv6 2620:0:1000:25::4 304 broadcast IETF
+ frame-relay map ipv6 2620:0:1000:25::2 302 broadcast IETF
+ frame-relay map ip 128.213.25.4 304 broadcast IETF
+ frame-relay map ip 128.213.25.2 302 broadcast IETF
+ !
+!
+interface Serial0/0/1
+ no ip address
+ shutdown
+ clock rate 2000000
+ !
+!
+!
+router ospf 1
+ log-adjacency-changes
+ area 12 stub
+ redistribute static subnets
+ redistribute bgp 113 subnets
+ network 10.1.1.4 0.0.0.0 area 0
+ network 10.10.10.1 0.0.0.0 area 0
+ network 128.213.25.0 0.0.0.255 area 25
+ network 128.213.113.0 0.0.0.255 area 12
+ network 128.213.130.0 0.0.0.63 area 0
+ network 128.213.138.0 0.0.0.3 area 0
+!
+router bgp 113
+ no synchronization
+ bgp log-neighbor-changes
+ network 10.1.1.4 mask 255.255.255.255
+ aggregate-address 10.1.1.0 255.255.255.0 summary-only
+ neighbor 128.213.138.2 remote-as 60
+ neighbor 128.213.138.2 distribute-list 102 out
+ neighbor 172.16.1.1 remote-as 60
+ neighbor 172.16.1.1 ebgp-multihop 5
+ no auto-summary
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+access-list 60 permit any
+access-list 101 permit ip 10.1.1.0 0.0.0.255 255.255.255.0 0.0.0.255
+access-list 101 permit ip any host 255.255.255.255
+access-list 102 deny   ip 10.1.1.0 0.0.0.255 255.255.255.0 0.0.0.255
+access-list 102 permit ip 128.213.0.0 0.0.255.255 255.255.0.0 0.0.255.255
+access-list 103 permit ip any 128.213.41.0 0.0.0.255
+ipv6 router ospf 1
+ log-adjacency-changes
+!
+!
+!
+!
+!
+route-map router6only permit 10
+ match ip address 60
+!
+!
+!
+control-plane
+ !
+!
+!
+!
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+!
+scheduler allocate 20000 1000
+end
+
