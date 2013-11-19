@@ -1,0 +1,187 @@
+Building configuration...
+
+Current configuration : 4049 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+authentication mac-move permit
+ip subnet-zero
+!
+!
+ipv6 unicast-routing
+vtp mode transparent
+!
+!
+crypto pki trustpoint TP-self-signed-4076379648
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4076379648
+ revocation-check none
+ rsakeypair TP-self-signed-4076379648
+!
+!
+crypto pki certificate chain TP-self-signed-4076379648
+ certificate self-signed 01
+  3082023C 308201A5 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 34303736 33373936 3438301E 170D3933 30333031 31383338 
+  35365A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 30373633 
+  37393634 3830819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100D4ED 01C3D388 3FB6DE63 21D433AF 169552E1 4057438B 4D44AF7B 637A78CC 
+  89CFEE5C C3E7DF6D CBD3E0DC 6CBD1453 8EF723C2 66B54129 4D513EC2 0FE45CE2 
+  809CB589 A5530A0D DADDA72B 246F8186 8C3B6FFF F2916210 74F3A857 FEACD6A5 
+  47FA157C C6227897 002AABBA 8048AB80 3A390563 A33DD930 9C1C402C 146F2186 
+  44030203 010001A3 64306230 0F060355 1D130101 FF040530 030101FF 300F0603 
+  551D1104 08300682 04535731 2E301F06 03551D23 04183016 8014C818 54D6FE29 
+  E52FA18C 72F37859 0ABC374C 2F49301D 0603551D 0E041604 14C81854 D6FE29E5 
+  2FA18C72 F378590A BC374C2F 49300D06 092A8648 86F70D01 01040500 03818100 
+  79FDEBF8 1DA7975A 48474DBF 981C3C75 CE150510 89AD9C38 10EFB1EA 46594E33 
+  B45933D9 B578CF97 B56E66D7 9B1450AF 107E4A3B 3D8AFA93 96F72F5B 9FDFBB6B 
+  03C1BDCF 306158C0 B0D822A2 221B47FC 19348AFA 5DD81A10 1B9CA021 1104EDE3 
+  EB816DEA 5F677571 201D419A 3CCD1A2B 82881BD0 9673C5B2 99CC61CA C503D0CB
+  quit
+license boot level ipservices
+spanning-tree mode pvst
+spanning-tree etherchannel guard misconfig
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 12,14-16,33-34,40 
+!
+!
+!
+!
+interface Loopback0
+ no ip address
+ ipv6 address 2001:3:12:12::12/64
+ ipv6 ospf 12 area 12
+!
+interface FastEthernet0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/1
+ description R1
+ switchport access vlan 12
+ switchport mode access
+!
+interface GigabitEthernet0/2
+!
+interface GigabitEthernet0/3
+ description R3
+ switchport access vlan 16
+ switchport mode access
+!
+interface GigabitEthernet0/4
+!
+interface GigabitEthernet0/5
+ description R5
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 15,40
+ switchport mode trunk
+!
+interface GigabitEthernet0/6
+!
+interface GigabitEthernet0/7
+!
+interface GigabitEthernet0/8
+!
+interface GigabitEthernet0/9
+!
+interface GigabitEthernet0/10
+!
+interface GigabitEthernet0/11
+!
+interface GigabitEthernet0/12
+!
+interface GigabitEthernet0/13
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/14
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/15
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/16
+!
+interface GigabitEthernet0/17
+!
+interface GigabitEthernet0/18
+!
+interface GigabitEthernet0/19
+!
+interface GigabitEthernet0/20
+!
+interface GigabitEthernet0/21
+!
+interface GigabitEthernet0/22
+!
+interface GigabitEthernet0/23
+!
+interface GigabitEthernet0/24
+!
+interface GigabitEthernet1/1
+!
+interface GigabitEthernet1/2
+!
+interface GigabitEthernet1/3
+!
+interface GigabitEthernet1/4
+!
+interface TenGigabitEthernet1/1
+!
+interface TenGigabitEthernet1/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan12
+ no ip address
+ ipv6 address 2001:3:1:12::12/64
+ ipv6 ospf 12 area 12
+!
+ip classless
+!
+ip http server
+ip http secure-server
+!
+ip sla enable reaction-alerts
+ipv6 router ospf 12
+ router-id 8.8.8.8
+ log-adjacency-changes
+!
+!
+!
+!
+!
+line con 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end
+

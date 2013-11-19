@@ -1,0 +1,179 @@
+Building configuration...
+
+Current configuration : 3843 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SW2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+authentication mac-move permit
+ip subnet-zero
+!
+!
+vtp mode transparent
+!
+!
+crypto pki trustpoint TP-self-signed-4076375040
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4076375040
+ revocation-check none
+ rsakeypair TP-self-signed-4076375040
+!
+!
+crypto pki certificate chain TP-self-signed-4076375040
+ certificate self-signed 01
+  3082023C 308201A5 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 34303736 33373530 3430301E 170D3933 30333031 31383339 
+  35385A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 30373633 
+  37353034 3030819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100BBBB 95AFF4E8 4E856383 C171086F 79D48251 87534519 FDD584B6 43677BAF 
+  ED210577 74FB97F8 2F0BF78C 74671D4C 8039CE7E FB2C57EB AF7E56F4 C2147654 
+  7C19EC27 931D8646 D1095FE7 33D45112 C5A8AEAC 63768754 B4A82308 988E0018 
+  C0354320 A4CF50CF 01C3B109 A86BE84E 9D2CF4D2 997E31D7 2069B15A F318253B 
+  8B230203 010001A3 64306230 0F060355 1D130101 FF040530 030101FF 300F0603 
+  551D1104 08300682 04535732 2E301F06 03551D23 04183016 80142270 83FEB5A2 
+  588A75A7 3DB5C296 667286CE 3C63301D 0603551D 0E041604 14227083 FEB5A258 
+  8A75A73D B5C29666 7286CE3C 63300D06 092A8648 86F70D01 01040500 03818100 
+  52433997 C11F36B5 79DBA7D1 3DBFD95D 249D43A1 662F6FFB 329D363D D3B4BBC0 
+  CD81B4F7 B6C99BEA FD24C433 FF955F6E 65669892 692EC17F D545A40D 841F87CF 
+  88738E91 818F60B6 F6DDDDAF BACB7FC8 7DAB2E8C 2517DBC2 AF77EF59 26BA4672 
+  9C60AF2A B58D8888 36106FFF 9A2B4895 2E2F6607 372FDC8E 67CCD8C5 BC177A5F
+  quit
+license boot level ipservices
+spanning-tree mode pvst
+spanning-tree etherchannel guard misconfig
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 12,14-16,33-34,40 
+!
+!
+!
+!
+interface Loopback0
+ no ip address
+!
+interface Loopback1
+ no ip address
+ ipv6 address 2001:3:15:15::15/64
+!
+interface FastEthernet0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface GigabitEthernet0/3
+!
+interface GigabitEthernet0/4
+ description R4
+ switchport access vlan 40
+ switchport mode access
+!
+interface GigabitEthernet0/5
+!
+interface GigabitEthernet0/6
+ description R6
+ switchport access vlan 16
+ switchport mode access
+!
+interface GigabitEthernet0/7
+!
+interface GigabitEthernet0/8
+!
+interface GigabitEthernet0/9
+!
+interface GigabitEthernet0/10
+!
+interface GigabitEthernet0/11
+!
+interface GigabitEthernet0/12
+!
+interface GigabitEthernet0/13
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/14
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/15
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/16
+!
+interface GigabitEthernet0/17
+!
+interface GigabitEthernet0/18
+!
+interface GigabitEthernet0/19
+!
+interface GigabitEthernet0/20
+!
+interface GigabitEthernet0/21
+!
+interface GigabitEthernet0/22
+!
+interface GigabitEthernet0/23
+!
+interface GigabitEthernet0/24
+!
+interface GigabitEthernet1/1
+!
+interface GigabitEthernet1/2
+!
+interface GigabitEthernet1/3
+!
+interface GigabitEthernet1/4
+!
+interface TenGigabitEthernet1/1
+!
+interface TenGigabitEthernet1/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan15
+ no ip address
+ ipv6 address 2001:3:1:15::15/64
+!
+ip classless
+!
+ip http server
+ip http secure-server
+!
+ip sla enable reaction-alerts
+!
+!
+!
+!
+line con 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end
+
